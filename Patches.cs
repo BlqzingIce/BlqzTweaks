@@ -1,3 +1,4 @@
+using IPA.Utilities;
 using SiraUtil.Affinity;
 using TMPro;
 using UnityEngine;
@@ -94,17 +95,19 @@ namespace BlqzTweaks
         
         [AffinityPatch(typeof(PlayerSettingsPanelController), "SetLayout")]
         [AffinityPrefix]
-        private void Prefix(ref EnvironmentEffectsFilterPresetDropdown  ____environmentEffectsFilterDefaultPresetDropdown, ref EnvironmentEffectsFilterPresetDropdown  ____environmentEffectsFilterExpertPlusPresetDropdown)
+        private void Prefix(ref EnvironmentEffectsFilterPresetDropdown  ____environmentEffectsFilterDefaultPresetDropdown, ref EnvironmentEffectsFilterPresetDropdown  ____environmentEffectsFilterExpertPlusPresetDropdown, ref FormattedFloatListSettingsController ____noteJumpFixedDurationSettingsController)
         {
             defaultPresetDropdown = ____environmentEffectsFilterDefaultPresetDropdown;
             expertPlusPresetDropdown = ____environmentEffectsFilterExpertPlusPresetDropdown;
-            
             if (defaultPresetDropdown)
             {
                 defaultPresetDropdown.didSelectCellWithIdxEvent -= OnLightSettingChanged;
                 defaultPresetDropdown.didSelectCellWithIdxEvent += OnLightSettingChanged;
             }
             if (expertPlusPresetDropdown) expertPlusPresetDropdown.transform.parent.gameObject.SetActive(false);
+
+            ____noteJumpFixedDurationSettingsController.values = new[] {0.425f, 0.430f, 0.435f, 0.440f, 0.445f, 0.450f, 0.455f, 0.460f, 0.465f, 0.470f, 0.475f, 0.480f, 0.485f, 0.490f, 0.495f, 0.500f};
+            ____noteJumpFixedDurationSettingsController.SetField("_formattingString", "{0:0.000}s");
         }
         
         private static void OnLightSettingChanged(int p_CellIndex, EnvironmentEffectsFilterPreset p_Setting)
